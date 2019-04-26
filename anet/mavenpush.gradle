@@ -1,0 +1,74 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+group = 'com.mmdteam'
+version = '1.0.0'// 上传版本号
+
+def siteUrl = 'https://github.com/mmd-team/anet'
+def gitUrl = 'https://github.com/mmd-team/anet.git' // git 地址
+
+Properties properties = new Properties()
+
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives'] //When uploading configuration files
+    pkg {
+        userOrg = 'mmdteam'
+        repo = 'anet'
+        name = 'anet'
+        desc = 'Android 网络封装工具'
+        websiteUrl = siteUrl
+        issueTrackerUrl = 'https://github.com/mmd-team/anet/issues'
+        vcsUrl = gitUrl
+        licenses = ['Apache-2.0']
+        labels = ['jar', 'android']
+        publicDownloadNumbers = true
+        publish = true //If version should be auto published after an upload
+        version {
+            name = version
+            desc = 'Android 网络封装工具'
+            vcsTag = version
+        }
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'anet'
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'weiyi'
+                        name 'weiyi'
+                        email 'wy0558@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+}
