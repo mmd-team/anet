@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mmdteam.anet.lib" />
+    package="com.mmdteam.anet.lib">
+    <!-- 需要网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

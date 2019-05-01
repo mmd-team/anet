@@ -41,9 +41,9 @@ public class InterceptorUtil {
      *
      * @return loggingInterceptor
      */
-    static HttpLoggingInterceptor loggingInterceptor() {
+    static HttpLoggingInterceptor loggingInterceptor(HttpLoggingInterceptor.Level level) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+        loggingInterceptor.setLevel(level);
         return loggingInterceptor;
     }
 

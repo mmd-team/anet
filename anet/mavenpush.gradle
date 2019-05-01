@@ -2,13 +2,13 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'com.mmdteam'
-version = '1.0.1'// 上传版本号
+version = '1.0.2'// 上传版本号
 
 def siteUrl = 'https://github.com/mmd-team/anet'
 def gitUrl = 'https://github.com/mmd-team/anet.git' // git 地址
 
-Properties properties = new Properties()
 
+Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 bintray {
     user = properties.getProperty("bintray.user")
@@ -28,7 +28,7 @@ bintray {
         publish = true //If version should be auto published after an upload
         version {
             name = this.version
-            desc = 'ANet ${this.version}'
+            desc = 'ANet 网络封装工具' + this.version
             vcsTag = this.version
             released = new Date()
             //Optional configuration for GPG signing
