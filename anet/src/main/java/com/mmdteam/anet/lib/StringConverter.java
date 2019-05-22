@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
  * https://segmentfault.com/q/1010000002748900
  * 关于Gson解析json数据时如果属性值为null则会报空的问题
  */
-public class StringConverter implements JsonSerializer<String>, JsonDeserializer<String> {
+class StringConverter implements JsonSerializer<String>, JsonDeserializer<String> {
     @Override
     public JsonElement serialize(String src, Type typeOfSrc,
                                  JsonSerializationContext context) {

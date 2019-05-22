@@ -1,5 +1,8 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
+//apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 group = 'com.mmdteam'
 version = '1.0.2'// 上传版本号
@@ -73,13 +76,4 @@ install {
             }
         }
     }
-}
-
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-artifacts {
-    archives sourcesJar
 }

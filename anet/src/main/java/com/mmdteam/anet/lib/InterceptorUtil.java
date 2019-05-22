@@ -1,13 +1,14 @@
 package com.mmdteam.anet.lib;
 
-import androidx.annotation.NonNull;
 
-import java.io.IOException;
+import android.text.TextUtils;
+
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -17,22 +18,17 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-public class InterceptorUtil {
+class InterceptorUtil {
     private static final String TAG = InterceptorUtil.class.getSimpleName();
 
     static Interceptor headerInterceptor() {
-        return new Interceptor() {
-            @NonNull
-            @Override
-            public Response intercept(@NonNull Chain chain) throws IOException {
-                Request original = chain.request();
-                Request.Builder builder = original.newBuilder();
-                Request request = builder.build();
-                return chain.proceed(request);
-            }
+        return chain -> {
+            Request original = chain.request();
+            Request.Builder builder = original.newBuilder();
+            Request request = builder.build();
+            return chain.proceed(request);
         };
     }
 
@@ -47,8 +43,15 @@ public class InterceptorUtil {
         return loggingInterceptor;
     }
 
+    private static String[] VERIFY_HOST_NAME_ARRAY = new String[]{};
+
     static HostnameVerifier hostnameVerifier() {
-        return (hostname, session) -> true;
+        return (hostname, session) -> {
+            if (TextUtils.isEmpty(hostname)) {
+                return false;
+            }
+            return !Arrays.asList(VERIFY_HOST_NAME_ARRAY).contains(hostname);
+        };
     }
 
     static SSLSocketFactory sslSocketFactory() {
