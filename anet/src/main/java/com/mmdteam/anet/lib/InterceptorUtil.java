@@ -1,12 +1,12 @@
 package com.mmdteam.anet.lib;
 
 
+import android.annotation.SuppressLint;
 import android.text.TextUtils;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
 
@@ -21,7 +21,7 @@ import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 class InterceptorUtil {
-    private static final String TAG = InterceptorUtil.class.getSimpleName();
+//    private static final String TAG = InterceptorUtil.class.getSimpleName();
 
     static Interceptor headerInterceptor() {
         return chain -> {
@@ -43,6 +43,7 @@ class InterceptorUtil {
         return loggingInterceptor;
     }
 
+    @SuppressWarnings("MismatchedReadAndWriteOfArray")
     private static String[] VERIFY_HOST_NAME_ARRAY = new String[]{};
 
     static HostnameVerifier hostnameVerifier() {
@@ -55,51 +56,54 @@ class InterceptorUtil {
     }
 
     static SSLSocketFactory sslSocketFactory() {
-        TrustManager[] trustManagers = new TrustManager[]{
+        TrustManager[] trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
+                    @SuppressLint("TrustAllX509TrustManager")
                     @Override
-                    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                    public void checkClientTrusted(X509Certificate[] chain, String authType) {
 
                     }
 
+                    @SuppressLint("TrustAllX509TrustManager")
                     @Override
-                    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                    public void checkServerTrusted(X509Certificate[] chain, String authType) {
 
                     }
 
                     @Override
                     public X509Certificate[] getAcceptedIssuers() {
-                        return new X509Certificate[0];
+                        return new X509Certificate[]{};
                     }
                 }
         };
         SSLSocketFactory sslSocketFactory = null;
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, trustManagers, new SecureRandom());
+            sslContext.init(null, trustAllCerts, new SecureRandom());
             sslSocketFactory = sslContext.getSocketFactory();
         } catch (NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
-
         }
         return sslSocketFactory;
     }
 
     static X509TrustManager x509TrustManager() {
         return new X509TrustManager() {
+            @SuppressLint("TrustAllX509TrustManager")
             @Override
-            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            public void checkClientTrusted(X509Certificate[] chain, String authType) {
 
             }
 
+            @SuppressLint("TrustAllX509TrustManager")
             @Override
-            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            public void checkServerTrusted(X509Certificate[] chain, String authType) {
 
             }
 
             @Override
             public X509Certificate[] getAcceptedIssuers() {
-                return new X509Certificate[0];
+                return new X509Certificate[]{};
             }
         };
     }

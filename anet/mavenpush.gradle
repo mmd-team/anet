@@ -5,7 +5,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 group = 'com.mmdteam'
-version = '1.0.2'// 上传版本号
+version = '1.0.3'// 上传版本号
 
 def siteUrl = 'https://github.com/mmd-team/anet'
 def gitUrl = 'https://github.com/mmd-team/anet.git' // git 地址
