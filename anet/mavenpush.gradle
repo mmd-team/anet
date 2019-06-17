@@ -18,7 +18,7 @@ bintray {
     key = properties.getProperty("bintray.apikey")
     configurations = ['archives'] //When uploading configuration files
     pkg {
-        userOrg = 'mmdteam'
+        userOrg = 'mmd-team'
         repo = 'anet'
         name = 'anet'
         desc = 'Android 网络封装工具'
@@ -26,7 +26,7 @@ bintray {
         issueTrackerUrl = 'https://github.com/mmd-team/anet/issues'
         vcsUrl = gitUrl
         licenses = ['Apache-2.0']
-        labels = ['jar', 'android']
+        labels = ['aar', 'android']
         publicDownloadNumbers = true
         publish = true //If version should be auto published after an upload
         version {
